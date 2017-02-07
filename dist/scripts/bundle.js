@@ -29115,6 +29115,75 @@ module.exports = require('./lib/React');
 
 var React = require('react');
 
+var About = React.createClass({displayName: "About",
+  render: function () {
+    return (
+          React.createElement("div", null, 
+            React.createElement("h1", null, " About "), 
+            React.createElement("p", null, "Technologies used for this website", 
+                React.createElement("ul", null, 
+                    React.createElement("li", null, " React"), 
+                    React.createElement("li", null, " Node JS"), 
+                    React.createElement("li", null, " Gulp"), 
+                    React.createElement("li", null, " Browserify"), 
+                    React.createElement("li", null, " Bootstrap"), 
+                    React.createElement("li", null, " React Router")
+                )
+            )
+          )
+    );
+  }
+});
+
+module.exports = About;
+},{"react":157}],159:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+
+var Header = React.createClass({displayName: "Header",
+  render: function() {
+      return (
+        React.createElement("nav", {className: "navbar navbar-default"}, 
+            React.createElement("div", {className: "container-fluid"}, 
+              React.createElement("a", {href: "/", className: "navbar-brand"}, 
+                React.createElement("img", {src: "images/manutd.jpg", height: "25", width: "25"})
+              ), 
+              React.createElement("ul", {className: "nav navbar-nav"}, 
+                React.createElement("li", null, " ", React.createElement("a", {href: "/"}, "Home")), 
+                React.createElement("li", null, " ", React.createElement("a", {href: "/#about"}, "About")), 
+                React.createElement("li", null, " ", React.createElement("a", {href: "/#contact"}, " Contact Us "))
+              )
+            )
+          )
+    );
+  }
+});
+
+module.exports = Header;
+},{"react":157}],160:[function(require,module,exports){
+var React = require('react');
+
+var Contact = React.createClass({displayName: "Contact",
+  render: function(){
+    return(
+      React.createElement("div", null, 
+        React.createElement("p", null, 
+          React.createElement("h3", null, "Contact Us at:"), 
+            "Gaurav Kulkarni" + ' ' +
+            "Boulder CO"
+        )
+      )
+    );
+  }
+});
+
+module.exports = Contact;
+},{"react":157}],161:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+
 
 //creating component "Home".
 var Home = React.createClass({displayName: "Home",
@@ -29129,11 +29198,40 @@ var Home = React.createClass({displayName: "Home",
 });
 
 module.exports = Home;
-},{"react":157}],159:[function(require,module,exports){
+},{"react":157}],162:[function(require,module,exports){
 $ = jQuery = require('jquery');
 var React = require('react');
 var Home = require('./components/homePage');
+var About = require('./components/about/aboutPage');
+var Header = require('./components/common/header');
+var Contact = require('./components/contact/contact');
 
-//format React.render('component we would like to render', DOM element to attach application to)
-React.render(React.createElement(Home, null), document.getElementById('app')); //Take component 'Home' and attach it to DOM element with id = app
-},{"./components/homePage":158,"jquery":1,"react":157}]},{},[159]);
+//creating a react component called "App" which would help us switch between About and Home
+var App = React.createClass({displayName: "App",
+  render: function(){
+    var Child;
+    console.log("here");
+    switch(this.props.route){
+      case 'about': Child = About; break;
+      case 'contact' : Child = Contact; break;
+      default: Child = Home; break;
+    }
+    console.log("Child" + Child);
+    return (
+      React.createElement("div", null, 
+        React.createElement(Header, null), 
+        React.createElement(Child, null)
+      )
+    );
+}
+});
+
+function render() {
+  var webroute = window.location.hash.substr(1);
+  console.log(webroute);
+  React.render(React.createElement(App, {route: webroute}), document.getElementById('app'));  //Take component returned by App and attach it to DOM element with id = app
+}
+
+window.addEventListener('hashchange', render);
+render();
+},{"./components/about/aboutPage":158,"./components/common/header":159,"./components/contact/contact":160,"./components/homePage":161,"jquery":1,"react":157}]},{},[162]);
