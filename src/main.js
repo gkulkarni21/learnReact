@@ -4,6 +4,7 @@ var Home = require('./components/homePage');
 var About = require('./components/about/aboutPage');
 var Header = require('./components/common/header');
 var Contact = require('./components/contact/contact');
+var Authors = require('./components/authors/authorPage');
 
 //creating a react component called "App" which would help us switch between About and Home
 var App = React.createClass({
@@ -12,7 +13,8 @@ var App = React.createClass({
     console.log("here");
     switch(this.props.route){
       case 'about': Child = About; break;
-      case 'contact' : Child = Contact; break;
+      case 'contact': Child = Contact; break;
+      case 'authors': Child = Authors; break;
       default: Child = Home; break;
     }
     console.log("Child" + Child);

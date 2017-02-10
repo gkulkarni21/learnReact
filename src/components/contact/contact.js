@@ -1,8 +1,10 @@
+"use strict";
+
 var React = require('react');
 
 var Contact = React.createClass({
   render: function(){
-    return(
+    return (
       <div>
         <p>
           <h3>Contact Us at:</h3>
